@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  python-app:
+    build: .
+    container_name: switchbot-python
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../:/app
+      - /app/__pycache__
+      - /app/.pytest_cache
+    environment:
+      - PYTHONPATH=/app
+    working_dir: /app
+    restart: unless-stopped
+    env_file:
+      - ../.env
+
+    # Uncomment the following lines if you need to run as root
+    # user: root
+    
+  # Optional: Add a database service if needed
+  # postgres:
+  #   image: postgres:15
+  #   container_name: switchbot-db
+  #   environment:
+  #     POSTGRES_DB: switchbot
+  #     POSTGRES_USER: user
+  #     POSTGRES_PASSWORD: password
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   restart: unless-stopped
+
+# Uncomment if using database service
+# volumes:
+#   postgres_data:
